@@ -1,0 +1,75 @@
+Table dim_film {
+  id varchar PK
+  title varchar
+  release_year integer
+  runtime integer
+  type varchar
+  genre varchar
+  plot varchar
+  language varchar
+  country varchar
+}
+
+Table dim_genre {
+  id varchar PK
+  genre varchar
+}
+
+Table genre_film {
+  dim_film_id varchar
+  dim_genre_id varchar
+}
+
+Table dim_person {
+  id varchar PK
+  name varchar
+}
+
+Table dim_director {
+  dim_film_id varchar
+  dim_person_id varchar
+}
+
+Table dim_actor {
+  dim_film_id varchar
+  dim_person_id varchar
+}
+
+Table dim_writer {
+  dim_film_id varchar
+  dim_person_id varchar
+}
+
+Table dim_distributor {
+  id varchar PK
+  distributor varchar
+}
+
+
+TABLE fact_daily_revenue {
+  date date
+  dim_film_id varchar
+  dim_distributor_id varchar
+  theaters integer
+  revenue integer
+}
+
+Table fact_ratings {
+  dim_film_id varchar
+  source varchar
+  rating varchar
+}
+
+
+Ref dim_film: dim_film.id < fact_daily_revenue.dim_film_id
+Ref dim_distributor: dim_distributor.id < fact_daily_revenue.dim_distributor_id
+Ref dim_person : dim_person.id < dim_director.dim_person_id
+Ref dim_person : dim_person.id < dim_actor.dim_person_id
+Ref dim_person : dim_person.id < dim_writer.dim_person_id
+Ref dim_film : dim_film.id < dim_director.dim_film_id
+Ref dim_film : dim_film.id < dim_actor.dim_film_id
+Ref dim_film : dim_film.id < dim_writer.dim_film_id
+Ref ratings : dim_film.id < fact_ratings.dim_film_id
+
+
+
