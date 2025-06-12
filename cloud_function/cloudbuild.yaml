@@ -1,0 +1,21 @@
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - functions
+      - deploy
+      - ingest_omdb_film
+      - --entry-point=ingest_omdb_film
+      - --runtime=python310
+      - --trigger-http
+      - --allow-unauthenticated
+      - --region=europe-central2
+      - --source=.
+      - --project=$_PROJECT_ID
+      - --service-account=$_SERVICE_ACCOUNT
+      - --set-secrets=API_KEY=$_SECRET_NAME:latest
+      - --set-env-vars=PROJECT_ID=$_PROJECT_ID,DATASET_ID=$_DATA_SET_ID,SOURCE_TABLE_ID=$_SOURCE_TABLE_ID,TARGET_TABLE_ID=$_TARGET_TABLE_ID
+
+timeout: 600s
+
+options:
+  logging: CLOUD_LOGGING_ONLY

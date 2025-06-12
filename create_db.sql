@@ -1,5 +1,5 @@
 -- CREATING film table
-CREATE OR REPLACE TABLE omdb_raw.film_raw (
+CREATE OR REPLACE TABLE omdb_raw.film_temp (
   Title STRING,
   Year STRING,
   Rated STRING,
